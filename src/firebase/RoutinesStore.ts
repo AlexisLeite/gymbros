@@ -11,12 +11,17 @@ import {
   Routine,
   LastWeights,
 } from "./routinesService"; // Asegúrate de que la ruta sea correcta
+import { getAuth } from 'firebase/auth';
 
 export class RoutinesStore {
   routines: Routine[] = [];
   loading: boolean = false;
   error: string | null = null;
   lastWeights: LastWeights = {};
+
+  updateLastWeight(name: string, howMuch: number) {
+    this.lastWeights[name] = howMuch
+  }
 
   public static instance = new RoutinesStore()
 
@@ -25,6 +30,13 @@ export class RoutinesStore {
 
     this.loadRoutines();
     this.loadLastWeights();
+
+    getAuth().onAuthStateChanged(state => {
+      if (state) {
+        this.loadRoutines()
+        this.loadLastWeights()
+      }
+    })
   }
 
   // Cargar rutinas (ya la tenías)
