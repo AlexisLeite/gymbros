@@ -19,6 +19,13 @@ export class RoutinesStore {
   error: string | null = null;
   lastWeights: LastWeights = {};
 
+  get knownExercises() {
+    const s = new Set<string>();
+    for (const r of routinesStore.routines) for (const it of r.items) s.add(it.exercise.trim());
+    s.delete("");
+    return Array.from(s).sort((a, b) => a.localeCompare(b));
+  }
+
   updateLastWeight(name: string, howMuch: number) {
     this.lastWeights[name] = howMuch
   }
@@ -45,8 +52,12 @@ export class RoutinesStore {
     this.error = null;
     try {
       const fetchedRoutines = await readAllRoutines();
+
+      console.log({ fetchedRoutines })
+
       runInAction(() => {
         this.routines = fetchedRoutines;
+        console.log(this.routines)
         this.loading = false;
       });
     } catch (e: any) {

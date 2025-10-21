@@ -33,6 +33,8 @@ export async function readAllRoutines(): Promise<Routine[]> {
   try {
     const querySnapshot = await getDocs(await query(collection(db, "routines"), where('owner', '==', SessionManager.instance.user.uid)));
 
+    console.log({ querySnapshot })
+
     querySnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
       const data = doc.data();
       routines.push({
