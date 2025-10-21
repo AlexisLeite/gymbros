@@ -90,7 +90,7 @@ export const RoutinesManager = observer(() => {
                     </button>
                     <button
                       className="rounded px-3 py-2 border border-red-300 text-red-700 hover:bg-red-50 dark:border-red-900/50 dark:text-red-300 dark:hover:bg-red-900/20"
-                      onClick={() => deleteRoutine(r.id)}
+                      onClick={() => { if (confirm('Estás segur@ de eliminar la rutina?')) { deleteRoutine(r.id) } }}
                       title="Eliminar rutina"
                     >
                       Eliminar

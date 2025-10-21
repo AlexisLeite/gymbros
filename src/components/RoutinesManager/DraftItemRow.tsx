@@ -72,7 +72,9 @@ export function DraftItemRow({
       <div className="col-span-2 flex items-center justify-end">
         <button
           className="rounded px-3 py-2 border border-red-300 text-red-700 hover:bg-red-50 dark:border-red-900/50 dark:text-red-300 dark:hover:bg-red-900/20"
-          onClick={onRemove}
+          onClick={() => {
+            if (confirm('Segur@ de eliminar el ejercicio?')) { onRemove() }
+          }}
         >
           Quitar
         </button>
